@@ -18,7 +18,7 @@ function App() {
     }
   }, [dice])
 
-  
+
 
   function generateDice() {
     return {
@@ -36,9 +36,15 @@ function App() {
   }
 
   function handleRollDices() {
-    setDice(oldDice => oldDice.map(die => {
-      return die.isHeld ? die : generateDice()
-    }))
+    if (!tenzies) {
+      setDice(oldDice => oldDice.map(die => {
+        return die.isHeld ? die : generateDice()
+      }))
+    }
+    else {
+      setTenzies(false)
+      setDice(allNewDice)
+    }
   }
 
   const allDiceElements = dice.map(die => <Die
@@ -65,7 +71,7 @@ function App() {
         </div>
         <button onClick={handleRollDices} className="roll-dice-btn">
           {tenzies ? "New Game" : "Roll"}
-          </button>
+        </button>
       </main>
     </div>
   )
