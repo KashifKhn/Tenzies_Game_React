@@ -11,6 +11,7 @@ body {
   background-color: #0B2434;
   height: 100vh;
   padding: 20px;
+  font-family: 'Karla', sans-serif;
 }
 
 main {
@@ -23,7 +24,7 @@ main {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -51,5 +52,26 @@ main {
 
 .die-face:hover {
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.roll-dice-btn {
+  height: 50px;
+  width: 100px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5035FF;
+  color: white;
+  font-size: 1.2rem;
+  font-family: 'Karla', sans-serif;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.616);
+  cursor: pointer;
+}
+
+.roll-dice-btn:focus {
+  outline: none;
+}
+
+.roll-dice-btn:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
 
