@@ -28,6 +28,18 @@ main {
   align-items: center;
 }
 
+.title {
+  font-size: 40px;
+  margin: 0;
+}
+
+.instructions {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-top: 0;
+  text-align: center;
+}
+
 .dice-container {
   display: grid;
   grid-template: auto auto / repeat(5, 1fr);
@@ -43,7 +55,6 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: white;
 }
 
 .die-num {
@@ -55,8 +66,10 @@ main {
 }
 
 .roll-dice-btn {
+  display: inline-block;
   height: 50px;
-  width: 100px;
+  /* width: 100px; */
+  padding-inline: 1rem;
   border: none;
   border-radius: 6px;
   background-color: #5035FF;
