@@ -7,7 +7,23 @@ import Confetti from "react-confetti"
 function App() {
   const [dice, setDice] = useState(allNewDice);
   const [tenzies, setTenzies] = useState(false)
+  const [minute, setMinute] = useState(0)
+  const [second, setSecond] = useState(0)
+  if(second > 59) {
+    setMinute(oldMinute => oldMinute + 1)
+    setSecond(0)
+  }
 
+  useEffect(() => {
+    const timeIntervalId = setInterval(() => {
+      if(tenzies) {
+        return;
+      }
+      setSecond(oldSecond => oldSecond + 1)
+    }, 1000)
+    return () =>  clearInterval(timeIntervalId);
+  })
+  console.log(second)
   useEffect(() => {
     const allHeld = dice.every(die => die.isHeld);
     const firstValue = dice[0].value;
@@ -41,6 +57,8 @@ function App() {
       }))
     }
     else {
+      setMinute(0)
+      setSecond(0)
       setTenzies(false)
       setDice(allNewDice)
     }
@@ -70,9 +88,10 @@ function App() {
       <main>
         {tenzies && <Confetti />}
         <h1 className="title">Tenzies</h1>
-        <p className="instructions" style={tenzies ? {fontWeight: "bold"} : {}}>
+        <p className="instructions" style={tenzies ? { fontWeight: "bold" } : {}}>
           {tenzies ? winingText : instructionsText}
-          </p>
+        </p>
+        <p>{String(minute).padStart(2, '0')} : {String(second).padStart(2, '0')}</p>
         <div className="dice-container">
           {allDiceElements}
         </div>

@@ -23,7 +23,6 @@ main {
   border-radius: 5px;
   padding: 20px;
   display: flex;
-  gap: 1rem;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
