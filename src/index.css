@@ -17,12 +17,13 @@ body {
 main {
   margin: 0 auto;
   background-color: #F5F5F5;
-  height: 400px;
+  height: 100%;
   width: 500px;
   max-width: 800px;
   border-radius: 5px;
   padding: 20px;
   display: flex;
+  gap: 1rem;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -68,7 +69,7 @@ main {
 .roll-dice-btn {
   display: inline-block;
   height: 50px;
-  /* width: 100px; */
+  margin-top: 1rem;
   padding-inline: 1rem;
   border: none;
   border-radius: 6px;
@@ -88,3 +89,37 @@ main {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
 
+
+@media (max-width: 45em) {
+  main {
+    width: 100%;
+  }
+
+  .dice-container {
+    grid-template: auto auto / repeat(4, 1fr);
+  }
+
+  .die-face:nth-child(9) {
+    grid-area: 3 / 2;
+  }
+  .die-face:last-child {
+    grid-area: 3 / 3;
+
+  }
+
+}
+
+@media (max-width: 25em) {
+  main {
+    width: 100%;
+  }
+
+  .dice-container {
+    grid-template: auto auto / repeat(3, 1fr);
+  }
+  .die-face:last-child {
+    grid-area: 4 / 2;
+
+  }
+
+}
