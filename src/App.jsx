@@ -14,7 +14,6 @@ function App() {
     const allSameValue = dice.every(die => firstValue === die.value)
     if (allHeld && allSameValue) {
       setTenzies(true)
-      console.log("you WOn")
     }
   }, [dice])
 
@@ -60,12 +59,20 @@ function App() {
     }))
   }
 
+  const winingText = `🌟🎉 Woo-hoo! 🎉🌟
+  👏👏👏 Let's give it up for the CHAMPION! 🏆🥇
+  🎉 Congratulations 🎉 🚀💫💥`
+
+  const instructionsText = "Roll until all dice are the same. Click each die to freeze it at its current value between rolls."
+
   return (
     <div className="App">
       <main>
         {tenzies && <Confetti />}
         <h1 className="title">Tenzies</h1>
-        <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+        <p className="instructions" style={tenzies ? {fontWeight: "bold"} : {}}>
+          {tenzies ? winingText : instructionsText}
+          </p>
         <div className="dice-container">
           {allDiceElements}
         </div>
