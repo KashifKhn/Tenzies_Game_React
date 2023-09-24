@@ -9,21 +9,22 @@ function App() {
   const [tenzies, setTenzies] = useState(false)
   const [minute, setMinute] = useState(0)
   const [second, setSecond] = useState(0)
-  if(second > 59) {
+  const [rollCount, setRollCount] = useState(0)
+
+  if (second > 59) {
     setMinute(oldMinute => oldMinute + 1)
     setSecond(0)
   }
 
   useEffect(() => {
     const timeIntervalId = setInterval(() => {
-      if(tenzies) {
+      if (tenzies) {
         return;
       }
       setSecond(oldSecond => oldSecond + 1)
     }, 1000)
-    return () =>  clearInterval(timeIntervalId);
+    return () => clearInterval(timeIntervalId);
   })
-  console.log(second)
   useEffect(() => {
     const allHeld = dice.every(die => die.isHeld);
     const firstValue = dice[0].value;
@@ -50,7 +51,10 @@ function App() {
     return newDice;
   }
 
+  console.log(rollCount)
+
   function handleRollDices() {
+    setRollCount(oldCount => oldCount + 1);
     if (!tenzies) {
       setDice(oldDice => oldDice.map(die => {
         return die.isHeld ? die : generateDice()
@@ -60,6 +64,7 @@ function App() {
       setMinute(0)
       setSecond(0)
       setTenzies(false)
+      setRollCount(0)
       setDice(allNewDice)
     }
   }
@@ -72,9 +77,11 @@ function App() {
   />)
 
   function handleDiceHold(id) {
-    setDice(oldDice => oldDice.map(die => {
-      return die.id === id ? { ...die, isHeld: !die.isHeld } : die
-    }))
+    if (!tenzies) {
+      setDice(oldDice => oldDice.map(die => {
+        return die.id === id ? { ...die, isHeld: !die.isHeld } : die
+      }))
+    }
   }
 
   const winingText = `🌟🎉 Woo-hoo! 🎉🌟
@@ -91,7 +98,11 @@ function App() {
         <p className="instructions" style={tenzies ? { fontWeight: "bold" } : {}}>
           {tenzies ? winingText : instructionsText}
         </p>
-        <p>{String(minute).padStart(2, '0')} : {String(second).padStart(2, '0')}</p>
+        <div className="count-container">
+          <p className="current-count">{rollCount}</p>
+          <p>{String(minute).padStart(2, '0')} : {String(second).padStart(2, '0')}</p>
+        </div>
+
         <div className="dice-container">
           {allDiceElements}
         </div>
