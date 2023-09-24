@@ -5,36 +5,47 @@ import Confetti from "react-confetti"
 
 
 function App() {
+  const [gameStart, setGameStart] = useState(false)
   const [dice, setDice] = useState(allNewDice);
   const [tenzies, setTenzies] = useState(false)
   const [minute, setMinute] = useState(0)
   const [second, setSecond] = useState(0)
-  const [rollCount, setRollCount] = useState(0)
+  const [countRoll, setCountRoll] = useState(0)
+  const [bestScore, setBestScore] = useState(localStorage.getItem("bestScore") || 9999999)
 
   if (second > 59) {
     setMinute(oldMinute => oldMinute + 1)
     setSecond(0)
   }
 
+  if (tenzies) {
+    if (countRoll < bestScore)
+      setBestScore(countRoll)
+    localStorage.setItem("bestScore", bestScore)
+  }
+
   useEffect(() => {
     const timeIntervalId = setInterval(() => {
-      if (tenzies) {
+      if (!gameStart)
         return;
-      }
+      if (tenzies)
+        return;
       setSecond(oldSecond => oldSecond + 1)
     }, 1000)
     return () => clearInterval(timeIntervalId);
   })
+
   useEffect(() => {
     const allHeld = dice.every(die => die.isHeld);
     const firstValue = dice[0].value;
     const allSameValue = dice.every(die => firstValue === die.value)
     if (allHeld && allSameValue) {
+      if (bestScore > countRoll) {
+        setBestScore(countRoll)
+      }
       setTenzies(true)
     }
   }, [dice])
-
-
 
   function generateDice() {
     return {
@@ -43,6 +54,7 @@ function App() {
       isHeld: false
     }
   }
+
   function allNewDice() {
     const newDice = [];
     for (let i = 0; i < 10; i++) {
@@ -51,10 +63,8 @@ function App() {
     return newDice;
   }
 
-  console.log(rollCount)
-
   function handleRollDices() {
-    setRollCount(oldCount => oldCount + 1);
+    setCountRoll(oldCount => oldCount + 1);
     if (!tenzies) {
       setDice(oldDice => oldDice.map(die => {
         return die.isHeld ? die : generateDice()
@@ -64,8 +74,9 @@ function App() {
       setMinute(0)
       setSecond(0)
       setTenzies(false)
-      setRollCount(0)
+      setCountRoll(0)
       setDice(allNewDice)
+      setGameStart(false)
     }
   }
 
@@ -77,11 +88,17 @@ function App() {
   />)
 
   function handleDiceHold(id) {
-    if (!tenzies) {
+    if (!tenzies && gameStart) {
       setDice(oldDice => oldDice.map(die => {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die
       }))
     }
+    else 
+      alert("Please start The Game")
+  }
+
+  function handleGameStart() {
+    setGameStart(oldGameStart => !oldGameStart)
   }
 
   const winingText = `🌟🎉 Woo-hoo! 🎉🌟
@@ -101,7 +118,7 @@ function App() {
         <div className="count-container">
           <div className="current-score-container">
             <p className="bold-text">Score</p>
-            <p className="current-count">{rollCount}</p>
+            <p className="current-count">{countRoll}</p>
           </div>
           <div className="timer-container">
             <p className="bold-text">Timer</p>
@@ -109,15 +126,22 @@ function App() {
           </div>
           <div className="best-score-container">
             <p className="bold-text">Best Score</p>
-            <p className="current-count">50</p>
+            {bestScore === 9999999 ? <p className="current-count">0</p> : <p className="current-count">{bestScore}</p>}
           </div>
         </div>
         <div className="dice-container">
           {allDiceElements}
         </div>
-        <button onClick={handleRollDices} className="roll-dice-btn">
-          {tenzies ? "New Game" : "Roll"}
-        </button>
+        {
+          gameStart ?
+            <button onClick={handleRollDices} className="roll-dice-btn">
+              {tenzies ? "New Game" : "Roll"}
+            </button>
+            :
+            <button onClick={handleGameStart} className="roll-dice-btn">
+              Start Game
+            </button>
+        }
       </main>
     </div>
   )
