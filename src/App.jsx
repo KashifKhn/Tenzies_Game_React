@@ -99,10 +99,19 @@ function App() {
           {tenzies ? winingText : instructionsText}
         </p>
         <div className="count-container">
-          <p className="current-count">{rollCount}</p>
-          <p>{String(minute).padStart(2, '0')} : {String(second).padStart(2, '0')}</p>
+          <div className="current-score-container">
+            <p className="bold-text">Score</p>
+            <p className="current-count">{rollCount}</p>
+          </div>
+          <div className="timer-container">
+            <p className="bold-text">Timer</p>
+            <p>{String(minute).padStart(2, '0')} : {String(second).padStart(2, '0')}</p>
+          </div>
+          <div className="best-score-container">
+            <p className="bold-text">Best Score</p>
+            <p className="current-count">50</p>
+          </div>
         </div>
-
         <div className="dice-container">
           {allDiceElements}
         </div>

@@ -4,6 +4,7 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  margin-block: 0;
 }
 
 body {
@@ -19,6 +20,7 @@ main {
   background-color: #F5F5F5;
   height: 100%;
   width: 500px;
+  gap: 1rem;
   max-width: 800px;
   border-radius: 5px;
   padding: 20px;
@@ -26,6 +28,10 @@ main {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+.bold-text {
+  font-weight: bold;
 }
 
 .title {
@@ -90,11 +96,16 @@ main {
 }
 
 .count-container {
+  width: 100%;
   display: flex;
-  justify-content: space-evenly;
-  width: 80%;
+  justify-content: space-around;
+  text-align: center;
 }
-
+.count-container div {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
 @media (max-width: 45em) {
   main {
     width: 100%;
